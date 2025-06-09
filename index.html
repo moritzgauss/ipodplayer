@@ -236,25 +236,17 @@
             font-size: 28px;
         }
 
-     .mobile-background-gif {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    z-index: -1;
-}
-
-@media (max-width: 768px) {
-    .background-video {
-        display: none;
-    }
-
-    .mobile-background-gif {
-        display: block;
-    }
-}
+        /* Mobile-specific styles - fallback */
+        .mobile-detected {
+            background-image: url('https://github.com/moritzgauss/ipodplayer/blob/main/material/ipodad.gif?raw=true') !important;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+        .mobile-detected .background-video {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+        }
     </style>
 </head>
 
@@ -264,8 +256,6 @@
         <source src="https://raw.githubusercontent.com/moritzgauss/ipodplayer/6c99f42a6443dc37aa263f82e8fa105313e2b6d0/material/ipodad.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
- <img class="mobile-background-gif" src="https://github.com/moritzgauss/ipodplayer/blob/main/material/ipodad.gif?raw=true" alt="iPod Ad GIF">
-
 
     <div class="scale-container">
         <div class="ipod-container">
@@ -273,7 +263,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="apple-logo">
 
             <div class="screen">
-                <iframe id="custom-video" src="https://www.youtube.com/embed/videoseries?list=PLj75rJl4M95B5R8FvqrETxJpNg78ZzLbf&autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1&playsinline=1" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+                <iframe id="custom-video" src="https://www.youtube.com/embed/videoseries?list=PLj75rJl4M95B5R8FvqrETxJpNg78ZzLbf&autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1&playsinline=1" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
             <!-- Headline -->
@@ -306,6 +296,38 @@
     </div>
 
      <script>
+               // Mobile detection and video handling
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                   ('ontouchstart' in window) || 
+                   (navigator.maxTouchPoints > 0) || 
+                   (navigator.msMaxTouchPoints > 0);
+        }
+
+        function handleMobileVideo() {
+            const backgroundVideo = document.querySelector('.background-video');
+            if (isMobileDevice()) {
+                // Add mobile class to body for CSS styling
+                document.body.classList.add('mobile-detected');
+                
+                // Completely remove the video element on mobile
+                if (backgroundVideo) {
+                    backgroundVideo.remove();
+                    console.log('Background video removed for mobile device');
+                }
+            }
+        }
+
+        // Run mobile check when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            handleMobileVideo();
+        });
+
+        // Also run on window resize in case device orientation changes
+        window.addEventListener('resize', function() {
+            handleMobileVideo();
+        });
+      
         const apiKey = 'AIzaSyAqVgTzwTuKZwf74ViqORE1zLxiiVFLhqw';
         const playlistId = 'PLj75rJl4M95B5R8FvqrETxJpNg78ZzLbf';
         const playPauseButton = document.getElementById('play-pause-button');
