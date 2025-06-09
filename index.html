@@ -236,19 +236,25 @@
             font-size: 28px;
         }
 
-        /* Mobile-specific styles */
-        @media (max-width: 768px) {
-            /* Set mobile background */
-            body {
-                background-image: url('https://github.com/moritzgauss/ipodplayer/blob/main/material/ipodad.gif?raw=true');
-                background-size: cover;
-                background-position: center;
-            }
+     .mobile-background-gif {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
 
-            .background-video {
-                display: none; /* Hide video background on mobile */
-            }
-        }
+@media (max-width: 768px) {
+    .background-video {
+        display: none;
+    }
+
+    .mobile-background-gif {
+        display: block;
+    }
+}
     </style>
 </head>
 
@@ -258,6 +264,8 @@
         <source src="https://raw.githubusercontent.com/moritzgauss/ipodplayer/6c99f42a6443dc37aa263f82e8fa105313e2b6d0/material/ipodad.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
+ <img class="mobile-background-gif" src="https://github.com/moritzgauss/ipodplayer/blob/main/material/ipodad.gif?raw=true" alt="iPod Ad GIF">
+
 
     <div class="scale-container">
         <div class="ipod-container">
@@ -265,7 +273,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Logo" class="apple-logo">
 
             <div class="screen">
-                <iframe id="custom-video" src="https://www.youtube.com/embed/videoseries?list=PLj75rJl4M95B5R8FvqrETxJpNg78ZzLbf&autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1&playsinline=1" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="custom-video" src="https://www.youtube.com/embed/videoseries?list=PLj75rJl4M95B5R8FvqrETxJpNg78ZzLbf&autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1&playsinline=1" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media"></iframe>
             </div>
 
             <!-- Headline -->
